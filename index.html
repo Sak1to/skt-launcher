@@ -3,48 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>SKT Launcher — шахматный лаунчер нового поколения</title>
-  <meta name="description" content="SKT Launcher — сверхбыстрый шахматный лаунчер на Rust. Модификации для популярных шахматных сервисов и бесплатная модель SKT Arch v0.1 beta на базе Stockfish 19 + нейросеть." />
+  <title>SKT Launcher — шахматный лаунчер на Rust</title>
+  <meta name="description" content="SKT Launcher — шахматный лаунчер на Rust. Модификации для Chess.com и Lichess и бесплатная модель анализа SKT Arch v0.1 beta на Stockfish 19 и нейросети." />
   <meta name="theme-color" content="#07070a" />
   <meta property="og:title" content="SKT Launcher" />
-  <meta property="og:description" content="Шахматный лаунчер на Rust. Stockfish 19 + нейросеть. Бесплатно." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♞</text></svg>" />
+  <meta property="og:description" content="Шахматный лаунчер на Rust. SKT Arch: Stockfish 19 + нейросеть. Бесплатно." />
+  <meta property="og:image" content="assets/logo-launcher.png" />
+  <link rel="icon" type="image/png" href="assets/logo-launcher.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Preloader -->
-  <div class="preloader" id="preloader">
-    <div class="preloader__logo">
-      <span>S</span><span>K</span><span>T</span>
-    </div>
-    <div class="preloader__bar"><i></i></div>
-  </div>
+  <!-- Icon sprite (Lucide icon set, stroke icons) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
+      <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></symbol>
+      <symbol id="i-brain" viewBox="0 0 24 24"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M12 5v13"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></symbol>
+      <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+      <symbol id="i-pawn" viewBox="0 0 24 24"><circle cx="12" cy="6" r="3"/><path d="M9.5 10.5h5L16 18H8z"/><path d="M6 21h12"/></symbol>
+      <symbol id="i-crown" viewBox="0 0 24 24"><path d="m2 5 3.5 12h13L22 5l-6 6-4-7-4 7-6-6z"/><path d="M5 21h14"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+      <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4"/></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+      <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></symbol>
+      <symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+      <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    </defs>
+  </svg>
 
-  <!-- Custom cursor -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-dot" id="cursorDot"></div>
-
-  <!-- Scroll progress -->
   <div class="progress" id="progress"></div>
-
   <canvas id="bg" aria-hidden="true"></canvas>
-  <div class="noise" aria-hidden="true"></div>
 
   <!-- NAV -->
   <header class="nav" id="nav">
     <a href="#top" class="nav__logo">
-      <span class="nav__knight">♞</span> SKT<b>Launcher</b>
+      <img src="assets/logo-launcher.png" alt="" width="34" height="34" /> SKT <b>Launcher</b>
     </a>
     <nav class="nav__links" id="navLinks">
       <a href="#mods">Модификации</a>
       <a href="#arch">SKT Arch</a>
-      <a href="#rust">Скорость</a>
-      <a href="#download">Скачать</a>
+      <a href="#preview">Интерфейс</a>
+      <a href="#" class="js-download">Скачать</a>
     </nav>
-    <a href="#download" class="btn btn--small magnetic nav__cta">Скачать</a>
+    <a href="#" class="btn btn--small nav__cta js-download">Скачать</a>
     <button class="burger" id="burger" aria-label="Меню"><span></span><span></span></button>
   </header>
 
@@ -53,27 +60,28 @@
     <section class="hero">
       <div class="hero__content">
         <div class="badge reveal">
-          <span class="badge__dot"></span> Новое: SKT Arch v0.1 beta уже внутри
+          <span class="badge__dot"></span> SKT Arch v0.1 beta уже в лаунчере
         </div>
-        <h1 class="hero__title">
+        <h1 class="hero__title" id="heroTitle">
           <span class="split">SKT</span>
-          <span class="split split--outline">Launcher</span>
+          <span class="split split--accent">Launcher</span>
         </h1>
         <p class="hero__sub reveal">
-          Шахматный лаунчер нового поколения. Модификации для любимых сервисов,
-          собственная модель <b>SKT Arch</b> на базе <b>Stockfish&nbsp;19</b> и нейросети —
-          и всё это на <b>Rust</b>. Мгновенно. Бесплатно.
+          Лаунчер для шахматистов: модификации для Chess.com и Lichess и встроенная
+          модель анализа <b>SKT Arch</b> на <b>Stockfish&nbsp;19</b> и нейросети.
+          Написан на <b>Rust</b>, поэтому запускается и работает быстро.
         </p>
         <div class="hero__actions reveal">
           <a href="#" class="btn btn--primary magnetic js-download">
-            <span class="btn__shine"></span>
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            <svg class="ic"><use href="#i-download"/></svg>
             Скачать бесплатно
           </a>
-          <a href="#arch" class="btn btn--ghost magnetic">Что внутри →</a>
+          <a href="#preview" class="btn btn--ghost magnetic">Посмотреть интерфейс</a>
         </div>
         <div class="hero__meta reveal">
-          <span>⚡ Rust core</span><span>♟ Stockfish 19</span><span>🧠 Neural Net</span>
+          <span><svg class="ic ic--rust"><use href="#i-zap"/></svg>Rust core</span>
+          <span><svg class="ic"><use href="#i-cpu"/></svg>Stockfish 19</span>
+          <span><svg class="ic ic--violet"><use href="#i-brain"/></svg>Neural Net</span>
         </div>
       </div>
 
@@ -81,62 +89,53 @@
         <div class="glow glow--1"></div>
         <div class="glow glow--2"></div>
         <div class="board3d" id="board3d"></div>
-        <div class="orbit orbit--1"></div>
-        <div class="orbit orbit--2"></div>
+        <div class="orbit"></div>
         <div class="float-card float-card--eval">
-          <small>EVAL</small><b>+1.24</b><em>depth 32</em>
+          <small>EVAL</small><b>+1.24</b><em>depth 18</em>
         </div>
         <div class="float-card float-card--move">
-          <small>BEST</small><b>Nf3!</b><em>0.04s</em>
+          <small>BEST</small><b>Nf3</b><em>520 ms</em>
         </div>
       </div>
-
-      <a href="#mods" class="scroll-hint" aria-label="Листать вниз"><span></span></a>
     </section>
 
     <!-- MARQUEE -->
     <div class="marquee" aria-hidden="true">
       <div class="marquee__track">
-        <span>RUST CORE</span><i>✦</i><span>STOCKFISH 19</span><i>✦</i><span>NEURAL ANALYSIS</span><i>✦</i><span>SKT ARCH v0.1β</span><i>✦</i><span>MODS</span><i>✦</i><span>100% FREE</span><i>✦</i>
-        <span>RUST CORE</span><i>✦</i><span>STOCKFISH 19</span><i>✦</i><span>NEURAL ANALYSIS</span><i>✦</i><span>SKT ARCH v0.1β</span><i>✦</i><span>MODS</span><i>✦</i><span>100% FREE</span><i>✦</i>
+        <span>Rust</span><i>/</i><span>Stockfish 19</span><i>/</i><span>Нейросеть</span><i>/</i><span>SKT Arch v0.1</span><i>/</i><span>Chess.com</span><i>/</i><span>Lichess</span><i>/</i>
+        <span>Rust</span><i>/</i><span>Stockfish 19</span><i>/</i><span>Нейросеть</span><i>/</i><span>SKT Arch v0.1</span><i>/</i><span>Chess.com</span><i>/</i><span>Lichess</span><i>/</i>
       </div>
     </div>
 
     <!-- MODS -->
     <section class="section" id="mods">
       <div class="section__head">
-        <span class="eyebrow reveal">01 — Модификации</span>
-        <h2 class="section__title reveal">Один лаунчер.<br /><span class="grad">Все твои сервисы.</span></h2>
+        <span class="eyebrow reveal">Модификации</span>
+        <h2 class="section__title reveal">Моды для сервисов,<br /><span class="accent">где ты играешь</span></h2>
         <p class="section__lead reveal">
-          Внутри SKT Launcher — набор модификаций для популярных шахматных платформ.
-          Подключай нужные в один клик, обновления приходят автоматически.
+          Выбери сервис в лаунчере и запусти мод одной кнопкой.
+          Анализ, тренировка и предсказание человеческих ходов — прямо в партии.
         </p>
       </div>
 
       <div class="cards">
         <article class="card tilt reveal">
-          <div class="card__icon">♟</div>
+          <div class="card__icon"><svg class="ic"><use href="#i-pawn"/></svg></div>
           <h3>Chess.com</h3>
-          <p>Улучшенный интерфейс, кастомные темы досок и фигур, расширенная статистика партий.</p>
-          <span class="card__tag">mod</span>
+          <p>Анализ позиции и подсказки SKT Arch поверх доски, тренировка и предсказание ходов соперника.</p>
+          <span class="card__tag">доступно</span>
         </article>
         <article class="card tilt reveal">
-          <div class="card__icon">♞</div>
+          <div class="card__icon"><svg class="ic"><use href="#i-crown"/></svg></div>
           <h3>Lichess</h3>
-          <p>Быстрый доступ к анализу, удобные горячие клавиши и интеграция с SKT Arch.</p>
-          <span class="card__tag">mod</span>
+          <p>Тот же набор инструментов для Lichess. Переключение между сервисами — в один клик.</p>
+          <span class="card__tag">доступно</span>
         </article>
-        <article class="card tilt reveal">
-          <div class="card__icon">♜</div>
-          <h3>Chess24 &amp; другие</h3>
-          <p>Единый стиль и инструменты для разных сервисов — без переключения между вкладками.</p>
-          <span class="card__tag">mod</span>
-        </article>
-        <article class="card tilt reveal">
-          <div class="card__icon">⚙</div>
-          <h3>Свои моды</h3>
-          <p>Гибкая система модулей: включай, выключай и настраивай всё под свой стиль игры.</p>
-          <span class="card__tag">soon</span>
+        <article class="card card--soon tilt reveal">
+          <div class="card__icon"><svg class="ic"><use href="#i-plus"/></svg></div>
+          <h3>Новые модули</h3>
+          <p>Следующие модификации уже в разработке и появятся в лаунчере с обновлениями.</p>
+          <span class="card__tag">скоро</span>
         </article>
       </div>
     </section>
@@ -145,26 +144,28 @@
     <section class="section arch" id="arch">
       <div class="arch__grid">
         <div class="arch__text">
-          <span class="eyebrow reveal">02 — Модель</span>
-          <h2 class="section__title reveal">SKT Arch<br /><span class="grad">v0.1 beta</span></h2>
+          <div class="arch__brand reveal">
+            <img src="assets/logo-arch.png" alt="Логотип SKT Arch" width="72" height="72" />
+            <span class="eyebrow">Модель для анализа</span>
+          </div>
+          <h2 class="section__title reveal">SKT Arch<br /><span class="accent">v0.1 beta</span></h2>
           <p class="section__lead reveal">
-            Продвинутая <b>бесплатная</b> шахматная модель. Классическая мощь
-            <b>Stockfish&nbsp;19</b> в связке с собственной <b>нейросетью</b>,
-            которая отбирает самые перспективные линии — для глубокого и при этом
-            быстрого анализа.
+            Бесплатная модель для анализа партий. Stockfish&nbsp;19 считает варианты,
+            а нейросеть подсказывает, какие линии смотреть в первую очередь и как сыграл бы
+            человек. Анализ получается глубоким и при этом быстрым.
           </p>
           <ul class="features">
-            <li class="reveal"><span>01</span><div><b>Stockfish 19</b><p>Один из сильнейших движков в мире — точный расчёт вариантов.</p></div></li>
-            <li class="reveal"><span>02</span><div><b>Нейросеть</b><p>Понимает позицию «по-человечески» и ускоряет поиск лучших ходов.</p></div></li>
-            <li class="reveal"><span>03</span><div><b>Глубоко и быстро</b><p>Большая глубина расчёта за доли секунды прямо на твоём ПК.</p></div></li>
-            <li class="reveal"><span>04</span><div><b>Бесплатно</b><p>Никаких подписок. Модель встроена в лаунчер.</p></div></li>
+            <li class="reveal"><svg class="ic"><use href="#i-cpu"/></svg><div><b>Stockfish 19</b><p>Точный расчёт вариантов, несколько линий MultiPV одновременно.</p></div></li>
+            <li class="reveal"><svg class="ic"><use href="#i-user"/></svg><div><b>Нейросеть Toby</b><p>Предсказывает человеческие ходы и ускоряет поиск сильнейшего продолжения.</p></div></li>
+            <li class="reveal"><svg class="ic"><use href="#i-sliders"/></svg><div><b>Гибкая настройка</b><p>Глубина поиска, потоки, лимит времени, размер Hash — под твой ПК.</p></div></li>
+            <li class="reveal"><svg class="ic"><use href="#i-gift"/></svg><div><b>Бесплатно</b><p>Без подписок. Модель уже встроена в лаунчер.</p></div></li>
           </ul>
         </div>
 
         <div class="analysis reveal">
           <div class="analysis__top">
-            <div class="dots"><i></i><i></i><i></i></div>
-            <span>SKT Arch · live analysis</span>
+            <img src="assets/logo-arch.png" alt="" width="22" height="22" />
+            <span>SKT Arch · анализ</span>
             <span class="live"><i></i>LIVE</span>
           </div>
           <div class="analysis__body">
@@ -176,41 +177,62 @@
             <div class="stat"><small>Узлов/с</small><b id="nps">0</b></div>
             <div class="stat"><small>Лучший ход</small><b id="best">—</b></div>
           </div>
-          <div class="analysis__line mono" id="pv">Инициализация SKT Arch…</div>
+          <div class="analysis__line mono" id="pv">Ожидание позиции…</div>
           <div class="analysis__engines">
-            <span class="chip chip--sf">Stockfish 19</span>
+            <span class="chip">Stockfish 19</span>
             <span class="plus">+</span>
-            <span class="chip chip--nn">Neural Net</span>
+            <span class="chip chip--nn">Нейросеть</span>
             <span class="plus">=</span>
-            <span class="chip chip--arch">SKT Arch</span>
+            <span class="chip chip--arch"><img src="assets/logo-arch.png" alt="" width="18" height="18" />SKT Arch</span>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- PREVIEW -->
+    <section class="section preview" id="preview">
+      <div class="section__head center">
+        <span class="eyebrow reveal">Интерфейс</span>
+        <h2 class="section__title reveal">Как это <span class="accent">выглядит</span></h2>
+      </div>
+
+      <div class="switch reveal" role="tablist" id="switch">
+        <span class="switch__pill" id="switchPill"></span>
+        <button class="switch__btn active" role="tab" aria-selected="true" data-tab="launcher">
+          <img src="assets/logo-launcher.png" alt="" width="24" height="24" /> SKT Launcher
+        </button>
+        <button class="switch__btn" role="tab" aria-selected="false" data-tab="arch">
+          <img src="assets/logo-arch.png" alt="" width="24" height="24" /> Arch 0.1
+        </button>
+      </div>
+
+      <div class="shots reveal">
+        <figure class="shot active" data-shot="launcher">
+          <img src="assets/ui-launcher.png" alt="Главный экран SKT Launcher" width="980" height="676" loading="lazy" />
+          <figcaption>Главный экран: модули, выбор сервиса (Chess.com / Lichess), запуск и changelog.</figcaption>
+        </figure>
+        <figure class="shot" data-shot="arch">
+          <img src="assets/ui-arch.png" alt="Панель движка SKT Arch" width="800" height="604" loading="lazy" />
+          <figcaption>Панель SKT Arch: настройки движка, предсказатель Toby и телеметрия в реальном времени.</figcaption>
+        </figure>
       </div>
     </section>
 
     <!-- RUST -->
     <section class="section rust" id="rust">
       <div class="section__head center">
-        <span class="eyebrow reveal">03 — Технологии</span>
-        <h2 class="section__title reveal">Написан на <span class="rust-word">Rust</span>.<br /><span class="grad">Поэтому так быстро.</span></h2>
+        <span class="eyebrow reveal">Технологии</span>
+        <h2 class="section__title reveal">Написан на <span class="rust-word">Rust</span></h2>
         <p class="section__lead reveal">
-          Никаких тяжёлых оболочек. Нативный код, минимальное потребление памяти
-          и мгновенный отклик — лаунчер запускается быстрее, чем ты успеешь моргнуть.
+          Ядро лаунчера и связка с движком написаны на Rust. Быстрый запуск,
+          экономное потребление памяти и отзывчивый интерфейс даже во время анализа.
         </p>
       </div>
 
-      <div class="stats">
-        <div class="stat-big reveal"><b><span class="count" data-to="1" data-prefix="&lt;">0</span><small>с</small></b><p>Запуск лаунчера</p></div>
-        <div class="stat-big reveal"><b><span class="count" data-to="19">0</span></b><p>Версия Stockfish</p></div>
-        <div class="stat-big reveal"><b><span class="count" data-to="100">0</span><small>%</small></b><p>Бесплатно</p></div>
-        <div class="stat-big reveal"><b><span class="count" data-to="0">0</span><small>ms</small></b><p>Лагов интерфейса</p></div>
-      </div>
-
-      <div class="speed reveal">
-        <div class="speed__row"><span>SKT Launcher <em>Rust</em></span><div class="speed__bar"><i style="--w:96%"></i></div></div>
-        <div class="speed__row"><span>Типичный Electron‑лаунчер</span><div class="speed__bar speed__bar--dim"><i style="--w:38%"></i></div></div>
-        <div class="speed__row"><span>Браузерное расширение</span><div class="speed__bar speed__bar--dim"><i style="--w:52%"></i></div></div>
-        <small class="speed__note">* условная иллюстрация отзывчивости интерфейса</small>
+      <div class="tech">
+        <div class="tech__item reveal"><svg class="ic ic--rust"><use href="#i-zap"/></svg><b>Быстрый старт</b><p>Нативный код без тяжёлых зависимостей — лаунчер открывается сразу.</p></div>
+        <div class="tech__item reveal"><svg class="ic"><use href="#i-layers"/></svg><b>Многопоточность</b><p>Stockfish использует несколько потоков, интерфейс при этом не подвисает.</p></div>
+        <div class="tech__item reveal"><svg class="ic"><use href="#i-activity"/></svg><b>Телеметрия движка</b><p>Видно, что считает движок прямо сейчас: глубина, линии, время.</p></div>
       </div>
     </section>
 
@@ -218,26 +240,24 @@
     <section class="section download" id="download">
       <div class="download__box reveal">
         <div class="download__glow"></div>
-        <div class="download__knight">♞</div>
-        <span class="eyebrow">Готов сделать ход?</span>
-        <h2 class="download__title">Скачай <span class="grad">SKT Launcher</span></h2>
-        <p class="section__lead">Бесплатно. Модификации и SKT Arch v0.1 beta уже внутри.</p>
+        <img class="download__logo" src="assets/logo-launcher.png" alt="Логотип SKT Launcher" width="96" height="96" />
+        <h2 class="download__title">Скачай <span class="accent">SKT Launcher</span></h2>
+        <p class="section__lead">Бесплатно. Модификации и SKT Arch v0.1 beta уже внутри.<br />Лаунчер выдаёт наш Telegram-бот.</p>
         <a href="#" class="btn btn--primary btn--xl magnetic js-download">
-          <span class="btn__shine"></span>
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
-          Скачать для Windows
+          <svg class="ic"><use href="#i-send"/></svg>
+          Скачать в Telegram
         </a>
         <div class="download__meta mono">
-          <span>v0.1 beta</span><span>•</span><span>Windows 10/11 x64</span><span>•</span><span>Rust native</span>
+          <span>v0.1 beta</span><span>·</span><span>Windows</span><span>·</span><span id="botName"></span>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="footer__logo"><span class="nav__knight">♞</span> SKT<b>Launcher</b></div>
-    <p>© <span id="year"></span> SKT. Сделано с ♥ к шахматам и Rust.</p>
-    <a href="#top" class="footer__top">Наверх ↑</a>
+    <div class="footer__logo"><img src="assets/logo-launcher.png" alt="" width="28" height="28" /> SKT <b>Launcher</b></div>
+    <p>© <span id="year"></span> SKT Launcher</p>
+    <a href="#" class="footer__link js-download"><svg class="ic"><use href="#i-send"/></svg><span class="js-bot"></span></a>
   </footer>
 
   <script src="script.js"></script>
