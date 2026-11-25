@@ -4,30 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Модификации и интерфейс — SKT Launcher</title>
-  <meta name="description" content="Модификации SKT Launcher для Chess.com и Lichess, встроенная модель SKT Arch v0.1 beta и скриншоты интерфейса." />
+  <meta name="description" content="Модификации SKT Launcher для Chess.com и Lichess, встроенная модель SKT Arch v0.1 beta (Stockfish 19 + AIarch v1) и скриншоты интерфейса." />
   <meta name="theme-color" content="#000000" />
   <link rel="icon" type="image/png" href="assets/logo-launcher.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=4" />
+  <link rel="stylesheet" href="style.css?v=5" />
 </head>
 <body>
   <svg width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
     <defs>
       <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></symbol>
       <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/></symbol>
-      <symbol id="i-brain" viewBox="0 0 24 24"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M12 5v13"/></symbol>
       <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></symbol>
-      <symbol id="i-pawn" viewBox="0 0 24 24"><circle cx="12" cy="6" r="3"/><path d="M9.5 10.5h5L16 18H8z"/><path d="M6 21h12"/></symbol>
-      <symbol id="i-crown" viewBox="0 0 24 24"><path d="m2 5 3.5 12h13L22 5l-6 6-4-7-4 7-6-6z"/><path d="M5 21h14"/></symbol>
       <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="m12 3 1.9 5.8L20 10.7l-6.1 1.9L12 19l-1.9-6.4L4 10.7l6.1-1.9z"/></symbol>
       <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+      <symbol id="i-smartphone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></symbol>
       <symbol id="i-win" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M3 5.5 10.8 4.4v7.1H3zm8.8-1.2L21 3v8.5h-9.2zM3 12.5h7.8v7.1L3 18.5zm8.8 0H21V21l-9.2-1.3z"/></symbol>
       <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
     </defs>
   </svg>
 
+  <div class="scroll-beam" id="scrollBeam" aria-hidden="true"></div>
   <div class="top-backdrop" aria-hidden="true"></div>
 
   <header class="q-header">
@@ -58,19 +57,17 @@
     <a href="arch.html" style="--i:2">SKT Arch 0.1</a>
     <a href="news.html" style="--i:3">Новости</a>
     <a href="about.html" style="--i:4">О проекте</a>
-    <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="js-download" style="--i:5">Скачать в Telegram</a>
+    <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="q-mobile-menu__cta js-download" style="--i:5">Скачать в Telegram</a>
   </div>
 
   <main>
-    <!-- HERO (mirrors qns.world/products) -->
     <section class="page-hero">
       <h1 class="anim-rise" style="--d:0.05s">Модули и возможности</h1>
       <p class="anim-rise" style="--d:0.12s">Все модификации и модель анализа SKT Arch доступны бесплатно внутри одного лаунчера</p>
     </section>
 
-    <!-- 3-CARD GLASS ROW (exact qns.world/products 3-card pricing/feature row) -->
     <section class="plans-row">
-      <article class="plan-card anim-rise" style="--d:0.16s">
+      <article class="plan-card spot anim-rise" style="--d:0.16s">
         <span class="plan-badge">Платформа</span>
         <div class="plan-sub">Модификация</div>
         <div class="plan-title">Chess.com</div>
@@ -78,13 +75,13 @@
         <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="btn-pill btn-pill--sm js-download">Скачать</a>
         <ul class="plan-list">
           <li>Анализ позиций в реальном времени</li>
-          <li>Предсказатель ходов Toby 2.0</li>
+          <li>Предсказатель ходов AIarch v1</li>
           <li>Тренировка дебютов и тактики</li>
           <li>Полная совместимость с SKT Arch</li>
         </ul>
       </article>
 
-      <article class="plan-card plan-card--featured anim-rise" style="--d:0.22s">
+      <article class="plan-card plan-card--featured spot anim-rise" style="--d:0.22s">
         <span class="plan-badge"><svg class="ic" width="13" height="13"><use href="#i-sparkle"/></svg>Встроено</span>
         <div class="plan-sub">Модель анализа</div>
         <div class="plan-title">SKT Arch</div>
@@ -92,13 +89,13 @@
         <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="btn-pill btn-pill--sm js-download">Скачать бесплатно</a>
         <ul class="plan-list">
           <li>Движок Stockfish 19 на Rust</li>
-          <li>Нейросеть для глубокого анализа</li>
+          <li>Нейросеть AIarch v1 для анализа</li>
           <li>До 6 линий MultiPV и Hash</li>
           <li>Без подписок и лимитов</li>
         </ul>
       </article>
 
-      <article class="plan-card anim-rise" style="--d:0.28s">
+      <article class="plan-card spot anim-rise" style="--d:0.28s">
         <span class="plan-badge">Платформа</span>
         <div class="plan-sub">Модификация</div>
         <div class="plan-title">Lichess</div>
@@ -113,7 +110,6 @@
       </article>
     </section>
 
-    <!-- UI SCREENSHOT SWITCHER (SKT Launcher / Arch 0.1 in exact qns.world pill-tab style) -->
     <section class="ui-switcher-section" id="interface">
       <h2 class="section-h2 reveal">Как это выглядит</h2>
 
@@ -139,15 +135,14 @@
           <div class="ui-shot__frame js-zoom" data-src="assets/ui-arch.png">
             <img src="assets/ui-arch.png" alt="Панель SKT Arch 0.1 beta" width="800" height="604" />
           </div>
-          <figcaption>SKT Arch 0.1 beta — управление Stockfish 19, предсказатель Toby 2.0 и живая телеметрия ядра Rust.</figcaption>
+          <figcaption>SKT Arch 0.1 beta — управление Stockfish 19, нейросеть AIarch v1 и живая телеметрия ядра Rust.</figcaption>
         </figure>
       </div>
     </section>
 
-    <!-- BENEFITS (exact qns.world/products "Достоинства") -->
     <section class="why-section">
       <h2 class="section-h2 reveal">Достоинства</h2>
-      <div class="why-card reveal">
+      <div class="why-card spot reveal">
         <div class="why-grid">
           <div class="why-col">
             <div class="why-col__ic"><svg class="ic" width="18" height="18"><use href="#i-zap"/></svg></div>
@@ -170,25 +165,33 @@
       </div>
     </section>
 
-    <!-- FREE DOWNLOAD CTA (mirrors qns.world/products Basic section) -->
     <section class="star-cta" id="download">
       <canvas class="star-cta__canvas js-starfield" aria-hidden="true"></canvas>
       <div class="star-cta__inner reveal">
         <span class="logo-mark logo-mark--launcher logo-mark--xl">
-          <img src="assets/logo-launcher.png" alt="SKT Launcher" width="92" height="92" />
+          <img src="assets/logo-launcher.png" alt="SKT Launcher" width="90" height="90" />
         </span>
         <h2 class="star-cta__title">Бесплатная версия для Windows</h2>
         <p class="star-cta__sub">Модификации Chess.com и Lichess + модель SKT Arch v0.1 beta уже внутри</p>
         <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="btn-pill btn-pill--lg js-download">
           <svg class="ic" width="18" height="18"><use href="#i-win"/></svg>
-          Скачать в Telegram
+          Скачать для Windows
         </a>
-        <p class="mono" style="margin-top:20px;font-size:12px;color:var(--text-45)">
-          Windows 10/11 x64 · Rust native · @sktlaucnherbot
-        </p>
+        <div class="os-note">
+          <span>Windows 10/11 x64 · Rust native</span>
+          <span>·</span>
+          <span class="os-note__soon"><i></i><svg class="ic" width="13" height="13"><use href="#i-smartphone"/></svg>Скоро на Android</span>
+        </div>
       </div>
     </section>
   </main>
+
+  <div class="mobile-dock" id="mobileDock">
+    <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="js-download">
+      <svg class="ic" width="16" height="16"><use href="#i-win"/></svg>
+      Скачать · скоро Android
+    </a>
+  </div>
 
   <footer class="q-footer">
     <div class="q-footer__top">
@@ -219,14 +222,14 @@
             <li><a href="mods.html">Модификации</a></li>
             <li><a href="arch.html">SKT Arch v0.1 beta</a></li>
             <li><a href="mods.html#interface">Интерфейс</a></li>
-            <li><a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="js-download">Скачать для Windows</a></li>
+            <li><a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="js-download">Windows (скоро Android)</a></li>
           </ul>
         </div>
         <div class="q-footer__col">
           <h4>Технологии</h4>
           <ul>
             <li><a href="arch.html#hybrid">Stockfish 19</a></li>
-            <li><a href="arch.html#inside">Нейросеть Toby</a></li>
+            <li><a href="arch.html#inside">Нейросеть AIarch v1</a></li>
             <li><a href="about.html">Ядро на Rust</a></li>
           </ul>
         </div>
@@ -242,6 +245,6 @@
     <img id="lightboxImg" src="" alt="" />
   </div>
 
-  <script src="app.js?v=4"></script>
+  <script src="app.js?v=5"></script>
 </body>
 </html>

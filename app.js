@@ -1,12 +1,13 @@
 /* =========================================================
-   SKT Launcher — Shared Runtime (qns.world architecture)
-   Starfield canvas, mobile overlay menu, interactive hero
-   launcher mockup, live chess analysis (Stockfish 19 + Toby),
-   UI switcher + lightbox, scroll timeline & safe reveals.
+   SKT Launcher — Shared Runtime v5 (qns.world architecture)
+   Scroll beam, specular card spotlight, magnetic pills,
+   starfield canvas, mobile overlay + sticky dock, interactive
+   hero launcher mockup with presets & AIarch v1 chess analysis.
    ========================================================= */
 
 const BOT = "sktlaucnherbot";
 const DOWNLOAD_URL = `https://t.me/${BOT}`;
+const isTouch = matchMedia("(hover: none)").matches;
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* ---------- Wire Telegram Download Links & Year ---------- */
@@ -16,6 +17,27 @@ document.querySelectorAll(".js-download").forEach((a) => {
   a.target = "_blank";
   a.rel = "noopener";
 });
+
+/* ---------- Scroll Progress Beam, Header Elevation & Mobile Sticky Dock ---------- */
+(function initScrollChrome() {
+  const beam = document.getElementById("scrollBeam");
+  const header = document.querySelector(".q-header");
+  const dock = document.getElementById("mobileDock");
+  const footer = document.querySelector(".q-footer");
+
+  const update = () => {
+    const y = window.scrollY;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    if (beam) beam.style.transform = `scaleX(${max > 0 ? Math.min(1, y / max) : 0})`;
+    if (header) header.classList.toggle("scrolled", y > 24);
+    if (dock) {
+      const nearFooter = footer ? footer.getBoundingClientRect().top < window.innerHeight + 20 : false;
+      dock.classList.toggle("visible", y > 360 && !nearFooter);
+    }
+  };
+  update();
+  addEventListener("scroll", update, { passive: true });
+})();
 
 /* ---------- Mobile Fullscreen Overlay Menu ---------- */
 (function initMobileMenu() {
@@ -33,12 +55,42 @@ document.querySelectorAll(".js-download").forEach((a) => {
   addEventListener("keydown", (e) => { if (e.key === "Escape") toggle(false); });
 })();
 
-/* ---------- Starfield Canvas (qns.world bottom CTA & arch hero) ---------- */
+/* ---------- Desktop Creative Micro-Interactions (Spotlight + Magnetic + Parallax) ---------- */
+if (!isTouch && !reduceMotion) {
+  document.querySelectorAll(".spot").forEach((card) => {
+    card.addEventListener("mousemove", (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty("--sx", `${e.clientX - r.left}px`);
+      card.style.setProperty("--sy", `${e.clientY - r.top}px`);
+    });
+  });
+
+  document.querySelectorAll(".btn-pill").forEach((btn) => {
+    btn.addEventListener("mousemove", (e) => {
+      const r = btn.getBoundingClientRect();
+      const dx = (e.clientX - r.left - r.width / 2) * 0.12;
+      const dy = (e.clientY - r.top - r.height / 2) * 0.18;
+      btn.style.transform = `translate(${dx}px, ${dy - 2}px)`;
+    });
+    btn.addEventListener("mouseleave", () => (btn.style.transform = ""));
+  });
+
+  const stage = document.querySelector(".dual-stage");
+  if (stage) {
+    addEventListener("mousemove", (e) => {
+      const nx = (e.clientX / window.innerWidth - 0.5) * 10;
+      const ny = (e.clientY / window.innerHeight - 0.5) * 6;
+      stage.style.transform = `translate3d(${-nx}px, ${-ny}px, 0)`;
+    });
+  }
+}
+
+/* ---------- Starfield Canvas ---------- */
 document.querySelectorAll(".js-starfield").forEach((canvas) => {
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
   let w = 0, h = 0, dpr = 1, stars = [];
-  const count = window.innerWidth < 700 ? 55 : 115;
+  const count = window.innerWidth < 700 ? 52 : 120;
 
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -49,9 +101,9 @@ document.querySelectorAll(".js-starfield").forEach((canvas) => {
       y: Math.random() * h,
       r: (Math.random() * 1.45 + 0.35) * dpr,
       a: Math.random() * Math.PI * 2,
-      s: Math.random() * 0.015 + 0.005,
-      vy: -(Math.random() * 0.14 + 0.04) * dpr,
-      blue: Math.random() < 0.35,
+      s: Math.random() * 0.016 + 0.005,
+      vy: -(Math.random() * 0.15 + 0.04) * dpr,
+      blue: Math.random() < 0.38,
     }));
   }
   resize();
@@ -69,7 +121,7 @@ document.querySelectorAll(".js-starfield").forEach((canvas) => {
         st.a += st.s;
         st.y += st.vy;
         if (st.y < -4) { st.y = h + 4; st.x = Math.random() * w; }
-        const alpha = 0.22 + (Math.sin(st.a) * 0.5 + 0.5) * 0.65;
+        const alpha = 0.22 + (Math.sin(st.a) * 0.5 + 0.5) * 0.68;
         ctx.beginPath();
         ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
         ctx.fillStyle = st.blue
@@ -124,16 +176,16 @@ document.querySelectorAll(".js-starfield").forEach((canvas) => {
   addEventListener("hashchange", () => setTimeout(sweep, 60));
 })();
 
-/* ---------- Homepage Interactive Desktop Mockup (qns.world hero style) ---------- */
+/* ---------- Homepage Interactive Desktop Mockup + Engine Presets ---------- */
 (function initHeroDemo() {
   const wrap = document.getElementById("showcaseWrap");
   const launchBtn = document.getElementById("demoLaunch");
   const statusTxt = document.getElementById("demoStatusTxt");
   const modeSlot = document.getElementById("demoModeVal");
   const pingSlot = document.getElementById("demoPingVal");
+  const depthBar = document.getElementById("demoBarFill");
   if (!wrap) return;
 
-  // Inner tabs: Интерактив / SKT Launcher / Arch 0.1
   const tabs = [...wrap.querySelectorAll(".pc-tab")];
   const panes = [...wrap.querySelectorAll(".pc-pane")];
   tabs.forEach((tab) => {
@@ -143,7 +195,6 @@ document.querySelectorAll(".js-starfield").forEach((canvas) => {
     });
   });
 
-  // Service switch inside demo (Chess.com / Lichess)
   let selectedSrv = "Chess.com";
   const srvBtns = [...wrap.querySelectorAll(".srv-btn")];
   srvBtns.forEach((b) => {
@@ -154,9 +205,24 @@ document.querySelectorAll(".js-starfield").forEach((canvas) => {
     });
   });
 
-  // Launch / Stop interactive toggle (just like qns.world ВКЛЮЧИТЬ button!)
+  const PRESETS = {
+    blitz: { depth: "16 ply", nps: "2.4M n/s", ms: "280 ms", bar: "58%" },
+    std: { depth: "18 ply", nps: "2.7M n/s", ms: "420 ms", bar: "76%" },
+    deep: { depth: "24 ply", nps: "3.1M n/s", ms: "680 ms", bar: "94%" },
+  };
+  let activePreset = "std";
+  const presetBtns = [...wrap.querySelectorAll(".preset-btn")];
+  presetBtns.forEach((b) => {
+    b.addEventListener("click", () => {
+      activePreset = b.dataset.preset;
+      presetBtns.forEach((x) => x.classList.toggle("active", x === b));
+      updateStatus();
+    });
+  });
+
   let running = true;
   function updateStatus() {
+    const p = PRESETS[activePreset] || PRESETS.std;
     wrap.classList.toggle("running", running);
     if (launchBtn) {
       launchBtn.classList.toggle("on", running);
@@ -166,25 +232,34 @@ document.querySelectorAll(".js-starfield").forEach((canvas) => {
     }
     if (statusTxt) {
       statusTxt.textContent = running
-        ? `Активен · ${selectedSrv} · Stockfish 19 + Toby 2.0`
+        ? `Активен · ${selectedSrv} · Stockfish 19 + AIarch v1`
         : `Остановлено · ${selectedSrv} готов к запуску`;
     }
-    if (modeSlot) modeSlot.textContent = running ? "18 ply · 2.7M n/s" : "Ожидание";
-    if (pingSlot) pingSlot.textContent = running ? "420 ms" : "—";
+    if (modeSlot) modeSlot.textContent = running ? `${p.depth} · ${p.nps}` : "Ожидание";
+    if (pingSlot) pingSlot.textContent = running ? p.ms : "—";
+    if (depthBar) depthBar.style.width = running ? p.bar : "0%";
   }
-  launchBtn?.addEventListener("click", () => {
-    running = !running;
-    updateStatus();
-  });
+
+  launchBtn?.addEventListener("click", () => { running = !running; updateStatus(); });
   updateStatus();
+
+  // Subtle live NPS jitter while running
+  if (!reduceMotion) {
+    setInterval(() => {
+      if (!running || !modeSlot) return;
+      const p = PRESETS[activePreset] || PRESETS.std;
+      const base = parseFloat(p.nps);
+      const jitter = (base + (Math.random() - 0.5) * 0.25).toFixed(1);
+      modeSlot.textContent = `${p.depth} · ${jitter}M n/s`;
+    }, 1800);
+  }
 })();
 
-/* ---------- Pill Tabs Switcher (mods.html UI showcase) + Lightbox ---------- */
+/* ---------- Pill Tabs Switcher + Lightbox ---------- */
 (function initPillSwitcher() {
   document.querySelectorAll(".js-pill-group").forEach((group) => {
     const btns = [...group.querySelectorAll(".pill-tab")];
-    const targetId = group.dataset.target;
-    const container = document.getElementById(targetId);
+    const container = document.getElementById(group.dataset.target);
     if (!container) return;
     const panels = [...container.querySelectorAll(".ui-shot")];
     btns.forEach((btn) => {
@@ -199,7 +274,6 @@ document.querySelectorAll(".js-starfield").forEach((canvas) => {
     });
   });
 
-  // Lightbox for clicking any screenshot
   const lb = document.getElementById("lightbox");
   const lbImg = document.getElementById("lightboxImg");
   const lbClose = document.getElementById("lightboxClose");
@@ -217,23 +291,21 @@ document.querySelectorAll(".js-starfield").forEach((canvas) => {
   addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
 })();
 
-/* ---------- Scroll-Active 3-Step Timeline (arch.html, qns.world/mobile style) ---------- */
+/* ---------- Scroll-Active 3-Step Timeline ---------- */
 (function initTimeline() {
   const items = [...document.querySelectorAll(".step-item")];
   if (!items.length) return;
   const update = () => {
     const mid = window.innerHeight * 0.58;
     let activeIdx = 0;
-    items.forEach((el, i) => {
-      if (el.getBoundingClientRect().top < mid) activeIdx = i;
-    });
+    items.forEach((el, i) => { if (el.getBoundingClientRect().top < mid) activeIdx = i; });
     items.forEach((el, i) => el.classList.toggle("active", i <= activeIdx));
   };
   update();
   addEventListener("scroll", update, { passive: true });
 })();
 
-/* ---------- Live Chess Analysis Widget (supports multiple boards across pages) ---------- */
+/* ---------- Live Chess Analysis Widget (Stockfish 19 + AIarch v1) ---------- */
 (function initChessBoards() {
   const boards = [...document.querySelectorAll(".js-chess-analysis")];
   if (!boards.length) return;
@@ -253,18 +325,18 @@ document.querySelectorAll(".js-starfield").forEach((canvas) => {
   };
 
   const MOVES = [
-    { from: "e2", to: "e4", san: "e4", eval: 0.30, toby: ["d2", "d4", "d4", 31], sfPct: 64 },
-    { from: "e7", to: "e5", san: "e5", eval: 0.32, toby: ["c7", "c5", "c5", 42], sfPct: 55 },
-    { from: "g1", to: "f3", san: "Nf3", eval: 0.28, toby: ["f1", "c4", "Bc4", 24], sfPct: 74 },
-    { from: "b8", to: "c6", san: "Nc6", eval: 0.34, toby: ["g8", "f6", "Nf6", 28], sfPct: 68 },
-    { from: "f1", to: "c4", san: "Bc4", eval: 0.30, toby: ["f1", "b5", "Bb5", 39], sfPct: 58 },
-    { from: "f8", to: "c5", san: "Bc5", eval: 0.38, toby: ["g8", "f6", "Nf6", 46], sfPct: 52 },
-    { from: "c2", to: "c3", san: "c3", eval: 0.35, toby: ["d2", "d3", "d3", 38], sfPct: 57 },
-    { from: "g8", to: "f6", san: "Nf6", eval: 0.44, toby: ["d7", "d6", "d6", 33], sfPct: 63 },
-    { from: "d2", to: "d4", san: "d4", eval: 0.32, toby: ["d2", "d3", "d3", 29], sfPct: 69 },
-    { from: "e5", to: "d4", san: "exd4", eval: 0.41, toby: ["c5", "b6", "Bb6", 14], sfPct: 84 },
-    { from: "c3", to: "d4", san: "cxd4", eval: 0.38, toby: ["e4", "e5", "e5", 22], sfPct: 76 },
-    { from: "c5", to: "b4", san: "Bb4+", eval: 0.29, toby: ["c5", "b6", "Bb6", 26], sfPct: 72 },
+    { from: "e2", to: "e4", san: "e4", eval: 0.30, ai: ["d2", "d4", "d4", 31], sfPct: 64 },
+    { from: "e7", to: "e5", san: "e5", eval: 0.32, ai: ["c7", "c5", "c5", 42], sfPct: 55 },
+    { from: "g1", to: "f3", san: "Nf3", eval: 0.28, ai: ["f1", "c4", "Bc4", 24], sfPct: 74 },
+    { from: "b8", to: "c6", san: "Nc6", eval: 0.34, ai: ["g8", "f6", "Nf6", 28], sfPct: 68 },
+    { from: "f1", to: "c4", san: "Bc4", eval: 0.30, ai: ["f1", "b5", "Bb5", 39], sfPct: 58 },
+    { from: "f8", to: "c5", san: "Bc5", eval: 0.38, ai: ["g8", "f6", "Nf6", 46], sfPct: 52 },
+    { from: "c2", to: "c3", san: "c3", eval: 0.35, ai: ["d2", "d3", "d3", 38], sfPct: 57 },
+    { from: "g8", to: "f6", san: "Nf6", eval: 0.44, ai: ["d7", "d6", "d6", 33], sfPct: 63 },
+    { from: "d2", to: "d4", san: "d4", eval: 0.32, ai: ["d2", "d3", "d3", 29], sfPct: 69 },
+    { from: "e5", to: "d4", san: "exd4", eval: 0.41, ai: ["c5", "b6", "Bb6", 14], sfPct: 84 },
+    { from: "c3", to: "d4", san: "cxd4", eval: 0.38, ai: ["e4", "e5", "e5", 22], sfPct: 76 },
+    { from: "c5", to: "b4", san: "Bb4+", eval: 0.29, ai: ["c5", "b6", "Bb6", 26], sfPct: 72 },
   ];
 
   const START = {
@@ -283,7 +355,7 @@ document.querySelectorAll(".js-starfield").forEach((canvas) => {
     const npsEl = root.querySelector(".js-nps");
     const bestEl = root.querySelector(".js-best");
     const pvSf = root.querySelector(".js-pv-sf");
-    const pvToby = root.querySelector(".js-pv-toby");
+    const pvAi = root.querySelector(".js-pv-ai");
     const btnPlay = root.querySelector(".js-play");
     const btnStep = root.querySelector(".js-step");
     const btnReset = root.querySelector(".js-reset");
@@ -333,7 +405,7 @@ document.querySelectorAll(".js-starfield").forEach((canvas) => {
       const m = MOVES[idx];
       if (!m) { arrowSf.setAttribute("opacity", "0"); arrowNn.setAttribute("opacity", "0"); return; }
       setArrow(arrowSf, m.from, m.to);
-      if (m.toby) setArrow(arrowNn, m.toby[0], m.toby[1]);
+      if (m.ai) setArrow(arrowNn, m.ai[0], m.ai[1]);
       if (bestEl) bestEl.textContent = m.san;
       const pv = MOVES.slice(idx, idx + 5).map((x, k) => {
         const n = idx + k;
@@ -341,7 +413,7 @@ document.querySelectorAll(".js-starfield").forEach((canvas) => {
         return k === 0 ? `${Math.floor(n / 2) + 1}…${x.san}` : x.san;
       });
       if (pvSf) pvSf.textContent = pv.join(" ");
-      if (pvToby && m.toby) pvToby.textContent = `Человек: ${m.san} (${m.sfPct}%) · альт. ${m.toby[2]} (${m.toby[3]}%)`;
+      if (pvAi && m.ai) pvAi.textContent = `Человек: ${m.san} (${m.sfPct}%) · альт. ${m.ai[2]} (${m.ai[3]}%)`;
     }
 
     function setEval(v) {

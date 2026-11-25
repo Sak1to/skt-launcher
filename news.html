@@ -4,22 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Новости — SKT Launcher</title>
-  <meta name="description" content="Обновления SKT Launcher и модели анализа SKT Arch v0.1 beta." />
+  <meta name="description" content="Обновления SKT Launcher и модели анализа SKT Arch v0.1 beta (Stockfish 19 + AIarch v1)." />
   <meta name="theme-color" content="#000000" />
   <link rel="icon" type="image/png" href="assets/logo-launcher.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=4" />
+  <link rel="stylesheet" href="style.css?v=5" />
 </head>
 <body>
   <svg width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
     <defs>
       <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+      <symbol id="i-win" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M3 5.5 10.8 4.4v7.1H3zm8.8-1.2L21 3v8.5h-9.2zM3 12.5h7.8v7.1L3 18.5zm8.8 0H21V21l-9.2-1.3z"/></symbol>
       <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
     </defs>
   </svg>
 
+  <div class="scroll-beam" id="scrollBeam" aria-hidden="true"></div>
   <div class="top-backdrop" aria-hidden="true"></div>
 
   <header class="q-header">
@@ -50,7 +52,7 @@
     <a href="arch.html" style="--i:2">SKT Arch 0.1</a>
     <a href="news.html" style="--i:3">Новости</a>
     <a href="about.html" style="--i:4">О проекте</a>
-    <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="js-download" style="--i:5">Скачать в Telegram</a>
+    <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="q-mobile-menu__cta js-download" style="--i:5">Скачать в Telegram</a>
   </div>
 
   <main>
@@ -59,25 +61,24 @@
       <p class="anim-rise" style="--d:0.12s">Обновления лаунчера, новые версии SKT Arch и планы развития</p>
     </section>
 
-    <!-- STACKED GLASS CARDS (exact qns.world/news layout) -->
     <section class="content-stack">
-      <article class="glass-card anim-rise" style="--d:0.16s">
+      <article class="glass-card spot anim-rise" style="--d:0.16s">
         <img class="news-banner js-zoom" data-src="assets/ui-arch.png" src="assets/ui-arch.png" alt="SKT Arch v0.1 beta" width="800" height="604" />
         <div class="glass-card__pad">
-          <h2>SKT Arch v0.1 beta — Stockfish 19 + Toby 2.0</h2>
+          <h2>SKT Arch v0.1 beta — Stockfish 19 + AIarch v1</h2>
           <span class="news-date">25.11.2026</span>
           <p>
             Вышла первая открытая бета-версия бесплатной модели шахматного анализа SKT Arch.
-            Связка Stockfish 19 и нейросети Toby 2.0 работает прямо на нативном ядре Rust с живой телеметрией,
+            Связка Stockfish 19 и нейросети AIarch v1 работает прямо на нативном ядре Rust с живой телеметрией,
             расчётом на ходу соперника и до 6 линий MultiPV.
           </p>
           <p>
-            Модель уже встроена в лаунчер — скачать сборку можно бесплатно в <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="ext-link js-download">@sktlaucnherbot</a>.
+            Модель уже встроена в лаунчер для Windows (версия для Android — скоро). Скачать сборку можно бесплатно в <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="ext-link js-download">@sktlaucnherbot</a>.
           </p>
         </div>
       </article>
 
-      <article class="glass-card reveal">
+      <article class="glass-card spot reveal">
         <img class="news-banner js-zoom" data-src="assets/ui-launcher.png" src="assets/ui-launcher.png" alt="SKT Launcher UI" width="980" height="676" />
         <div class="glass-card__pad">
           <h2>Релиз SKT Launcher на Rust</h2>
@@ -89,18 +90,25 @@
         </div>
       </article>
 
-      <article class="glass-card reveal">
+      <article class="glass-card spot reveal">
         <div class="glass-card__pad">
-          <h2>Новые модификации в разработке</h2>
+          <h2>Мобильная версия для Android и новые модули</h2>
           <span class="news-date">Скоро</span>
           <p>
-            Мы готовим дополнительные модули для других шахматных сервисов, расширенные визуальные темы
-            и инструменты для разбора партий. Все новые модули появятся автоматически внутри SKT Launcher.
+            Мы готовим мобильную версию SKT Launcher для Android, а также дополнительные модули для других
+            шахматных сервисов и расширенные инструменты разбора партий.
           </p>
         </div>
       </article>
     </section>
   </main>
+
+  <div class="mobile-dock" id="mobileDock">
+    <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="js-download">
+      <svg class="ic" width="16" height="16"><use href="#i-win"/></svg>
+      Скачать · скоро Android
+    </a>
+  </div>
 
   <footer class="q-footer">
     <div class="q-footer__top">
@@ -131,14 +139,14 @@
             <li><a href="mods.html">Модификации</a></li>
             <li><a href="arch.html">SKT Arch v0.1 beta</a></li>
             <li><a href="mods.html#interface">Интерфейс</a></li>
-            <li><a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="js-download">Скачать для Windows</a></li>
+            <li><a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="js-download">Windows (скоро Android)</a></li>
           </ul>
         </div>
         <div class="q-footer__col">
           <h4>Технологии</h4>
           <ul>
             <li><a href="arch.html#hybrid">Stockfish 19</a></li>
-            <li><a href="arch.html#inside">Нейросеть Toby</a></li>
+            <li><a href="arch.html#inside">Нейросеть AIarch v1</a></li>
             <li><a href="about.html">Ядро на Rust</a></li>
           </ul>
         </div>
@@ -154,6 +162,6 @@
     <img id="lightboxImg" src="" alt="" />
   </div>
 
-  <script src="app.js?v=4"></script>
+  <script src="app.js?v=5"></script>
 </body>
 </html>

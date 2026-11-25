@@ -4,21 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>О проекте — SKT Launcher</title>
-  <meta name="description" content="О проекте SKT Launcher: архитектура на Rust, Stockfish 19, нейросеть Toby и контакты." />
+  <meta name="description" content="О проекте SKT Launcher: архитектура на Rust, Stockfish 19, нейросеть AIarch v1 и контакты." />
   <meta name="theme-color" content="#000000" />
   <link rel="icon" type="image/png" href="assets/logo-launcher.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=4" />
+  <link rel="stylesheet" href="style.css?v=5" />
 </head>
 <body>
   <svg width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
     <defs>
       <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+      <symbol id="i-win" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M3 5.5 10.8 4.4v7.1H3zm8.8-1.2L21 3v8.5h-9.2zM3 12.5h7.8v7.1L3 18.5zm8.8 0H21V21l-9.2-1.3z"/></symbol>
     </defs>
   </svg>
 
+  <div class="scroll-beam" id="scrollBeam" aria-hidden="true"></div>
   <div class="top-backdrop" aria-hidden="true"></div>
 
   <header class="q-header">
@@ -49,7 +51,7 @@
     <a href="arch.html" style="--i:2">SKT Arch 0.1</a>
     <a href="news.html" style="--i:3">Новости</a>
     <a href="about.html" style="--i:4">О проекте</a>
-    <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="js-download" style="--i:5">Скачать в Telegram</a>
+    <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="q-mobile-menu__cta js-download" style="--i:5">Скачать в Telegram</a>
   </div>
 
   <main>
@@ -57,30 +59,29 @@
       <h1 class="anim-rise" style="--d:0.05s">О проекте</h1>
     </section>
 
-    <!-- 3 STACKED DARK GLASS CARDS (exact qns.world/about layout) -->
     <section class="content-stack">
-      <article class="glass-card anim-rise" style="--d:0.12s">
+      <article class="glass-card spot anim-rise" style="--d:0.12s">
         <div class="glass-card__pad">
           <h2>SKT Launcher</h2>
           <p>
             SKT Launcher — единый быстрый лаунчер для шахматистов, объединяющий модификации для Chess.com,
-            Lichess и будущих платформ. Всё работает из одного минималистичного окна без лишних расширений.
+            Lichess и будущих платформ. Доступен для Windows, а мобильная версия для Android уже готовится к выходу.
           </p>
         </div>
       </article>
 
-      <article class="glass-card anim-rise" style="--d:0.18s">
+      <article class="glass-card spot anim-rise" style="--d:0.18s">
         <div class="glass-card__pad">
           <h2>Технологии: Rust + SKT Arch</h2>
           <p>
             Вся основа лаунчера и телеметрия движка написаны на Rust — благодаря этому приложение открывается
             мгновенно и экономит ресурсы системы. Внутри бесплатно доступна модель SKT Arch v0.1 beta,
-            сочетающая Stockfish 19 и нейросеть Toby 2.0 для глубокого и быстрого анализа позиций.
+            сочетающая Stockfish 19 и нейросеть AIarch v1 для глубокого и быстрого анализа позиций.
           </p>
         </div>
       </article>
 
-      <article class="glass-card anim-rise" style="--d:0.24s">
+      <article class="glass-card spot anim-rise" style="--d:0.24s">
         <div class="glass-card__pad">
           <h2>Контакты и загрузка</h2>
           <p>Скачивание актуальных версий: <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="ext-link js-download">@sktlaucnherbot</a></p>
@@ -89,6 +90,13 @@
       </article>
     </section>
   </main>
+
+  <div class="mobile-dock" id="mobileDock">
+    <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="js-download">
+      <svg class="ic" width="16" height="16"><use href="#i-win"/></svg>
+      Скачать · скоро Android
+    </a>
+  </div>
 
   <footer class="q-footer">
     <div class="q-footer__top">
@@ -119,14 +127,14 @@
             <li><a href="mods.html">Модификации</a></li>
             <li><a href="arch.html">SKT Arch v0.1 beta</a></li>
             <li><a href="mods.html#interface">Интерфейс</a></li>
-            <li><a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="js-download">Скачать для Windows</a></li>
+            <li><a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="js-download">Windows (скоро Android)</a></li>
           </ul>
         </div>
         <div class="q-footer__col">
           <h4>Технологии</h4>
           <ul>
             <li><a href="arch.html#hybrid">Stockfish 19</a></li>
-            <li><a href="arch.html#inside">Нейросеть Toby</a></li>
+            <li><a href="arch.html#inside">Нейросеть AIarch v1</a></li>
             <li><a href="about.html">Ядро на Rust</a></li>
           </ul>
         </div>
@@ -135,6 +143,6 @@
     <p class="q-footer__copy">© <span class="js-year">2026</span> SKT Launcher. Все права защищены.</p>
   </footer>
 
-  <script src="app.js?v=4"></script>
+  <script src="app.js?v=5"></script>
 </body>
 </html>
