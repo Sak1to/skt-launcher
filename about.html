@@ -4,15 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>О проекте — SKT Launcher</title>
-  <meta name="description" content="О проекте SKT Launcher: архитектура на Rust, Stockfish 19, нейросеть AIarch v1 и контакты." />
+  <meta name="description" content="О проекте SKT Launcher: архитектура на Rust, Stockfish 19, нейросеть AIarch v1 и Telegram-канал @sktlauncher." />
   <meta name="theme-color" content="#000000" />
   <link rel="icon" type="image/png" href="assets/logo-launcher.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=5" />
+  <link rel="stylesheet" href="style.css?v=6" />
 </head>
-<body>
+<body data-title-key="title_about">
   <svg width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
     <defs>
       <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
@@ -31,51 +31,55 @@
       SKT Launcher
     </a>
     <nav class="q-nav">
-      <a href="mods.html">Модули</a>
-      <a href="arch.html">SKT Arch</a>
-      <a href="news.html">Новости</a>
-      <a href="about.html" class="active">О проекте</a>
+      <a href="mods.html" data-i18n="nav_mods">Модули</a>
+      <a href="arch.html" data-i18n="nav_arch">SKT Arch</a>
+      <a href="news.html" data-i18n="nav_news">Новости</a>
+      <a href="about.html" class="active" data-i18n="nav_about">О проекте</a>
     </nav>
     <div class="q-actions">
-      <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="js-download">Telegram</a>
-      <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="q-actions__dl js-download">Скачать</a>
+      <a href="https://t.me/sktlauncher" target="_blank" rel="noopener" class="js-download">Telegram</a>
+      <a href="https://t.me/sktlauncher" target="_blank" rel="noopener" class="q-actions__dl js-download" data-i18n="nav_dl">Скачать</a>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" class="lang-btn active" data-lang="ru" aria-pressed="true">RU</button>
+        <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <button class="q-burger" id="qBurger" type="button" aria-label="Меню" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    <button class="q-burger" id="qBurger" type="button" aria-label="Меню" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
   </header>
 
   <div class="q-mobile-menu" id="qMobileMenu">
-    <a href="index.html" style="--i:0">Главная</a>
-    <a href="mods.html" style="--i:1">Модули</a>
+    <a href="index.html" style="--i:0" data-i18n="nav_home">Главная</a>
+    <a href="mods.html" style="--i:1" data-i18n="nav_mods">Модули</a>
     <a href="arch.html" style="--i:2">SKT Arch 0.1</a>
-    <a href="news.html" style="--i:3">Новости</a>
-    <a href="about.html" style="--i:4">О проекте</a>
-    <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="q-mobile-menu__cta js-download" style="--i:5">Скачать в Telegram</a>
+    <a href="news.html" style="--i:3" data-i18n="nav_news">Новости</a>
+    <a href="about.html" style="--i:4" data-i18n="nav_about">О проекте</a>
+    <a href="https://t.me/sktlauncher" target="_blank" rel="noopener" class="q-mobile-menu__cta js-download" style="--i:5" data-i18n="nav_dl_tg">Скачать в Telegram</a>
   </div>
 
   <main>
     <section class="page-hero">
-      <h1 class="anim-rise" style="--d:0.05s">О проекте</h1>
+      <h1 class="anim-rise" style="--d:0.05s" data-i18n="about_h1">О проекте</h1>
     </section>
 
     <section class="content-stack">
       <article class="glass-card spot anim-rise" style="--d:0.12s">
         <div class="glass-card__pad">
           <h2>SKT Launcher</h2>
-          <p>
+          <p data-i18n="ab1_p">
             SKT Launcher — единый быстрый лаунчер для шахматистов, объединяющий модификации для Chess.com,
-            Lichess и будущих платформ. Доступен для Windows, а мобильная версия для Android уже готовится к выходу.
+            Lichess и будущих платформ. Доступен для Windows (бесплатно на 30 дней), а версия для Android уже готовится к выходу.
           </p>
         </div>
       </article>
 
       <article class="glass-card spot anim-rise" style="--d:0.18s">
         <div class="glass-card__pad">
-          <h2>Технологии: Rust + SKT Arch</h2>
-          <p>
+          <h2 data-i18n="ab2_t">Технологии: Rust + SKT Arch</h2>
+          <p data-i18n="ab2_p">
             Вся основа лаунчера и телеметрия движка написаны на Rust — благодаря этому приложение открывается
-            мгновенно и экономит ресурсы системы. Внутри бесплатно доступна модель SKT Arch v0.1 beta,
+            мгновенно и экономит ресурсы системы. Внутри доступна модель SKT Arch v0.1 beta (бесплатно на 30 дней),
             сочетающая Stockfish 19 и нейросеть AIarch v1 для глубокого и быстрого анализа позиций.
           </p>
         </div>
@@ -83,18 +87,18 @@
 
       <article class="glass-card spot anim-rise" style="--d:0.24s">
         <div class="glass-card__pad">
-          <h2>Контакты и загрузка</h2>
-          <p>Скачивание актуальных версий: <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="ext-link js-download">@sktlaucnherbot</a></p>
-          <p>Репозиторий сайта: <a href="https://github.com/Sak1to/skt-launcher" target="_blank" rel="noopener" class="ext-link">github.com/Sak1to/skt-launcher</a></p>
+          <h2 data-i18n="ab3_t">Контакты и загрузка</h2>
+          <p><span data-i18n="ab3_tg">Telegram-канал и загрузка:</span> <a href="https://t.me/sktlauncher" target="_blank" rel="noopener" class="ext-link js-download">@sktlauncher</a></p>
+          <p><span data-i18n="ab3_gh">Репозиторий сайта:</span> <a href="https://github.com/Sak1to/skt-launcher" target="_blank" rel="noopener" class="ext-link">github.com/Sak1to/skt-launcher</a></p>
         </div>
       </article>
     </section>
   </main>
 
   <div class="mobile-dock" id="mobileDock">
-    <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="js-download">
+    <a href="https://t.me/sktlauncher" target="_blank" rel="noopener" class="js-download">
       <svg class="ic" width="16" height="16"><use href="#i-win"/></svg>
-      Скачать · скоро Android
+      <span data-i18n="dock_cta">Скачать · скоро Android</span>
     </a>
   </div>
 
@@ -107,42 +111,43 @@
           </span>
           SKT Launcher
         </a>
-        <a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="q-footer__tg js-download">
+        <a href="https://t.me/sktlauncher" target="_blank" rel="noopener" class="q-footer__tg js-download">
           <svg class="ic" width="16" height="16"><use href="#i-send"/></svg>
-          Наш Telegram (@sktlaucnherbot)
+          <span data-i18n="footer_tg">Наш Telegram (@sktlauncher)</span>
         </a>
       </div>
       <div class="q-footer__cols">
         <div class="q-footer__col">
-          <h4>Инфо</h4>
+          <h4 data-i18n="footer_info">Инфо</h4>
           <ul>
-            <li><a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="js-download">Telegram-бот</a></li>
-            <li><a href="news.html">Новости</a></li>
-            <li><a href="about.html">О проекте</a></li>
+            <li><a href="https://t.me/sktlauncher" target="_blank" rel="noopener" class="js-download" data-i18n="footer_tg_ch">Telegram-канал</a></li>
+            <li><a href="news.html" data-i18n="nav_news">Новости</a></li>
+            <li><a href="about.html" data-i18n="nav_about">О проекте</a></li>
           </ul>
         </div>
         <div class="q-footer__col">
-          <h4>Продукт</h4>
+          <h4 data-i18n="footer_product">Продукт</h4>
           <ul>
-            <li><a href="mods.html">Модификации</a></li>
+            <li><a href="mods.html" data-i18n="footer_mods">Модификации</a></li>
             <li><a href="arch.html">SKT Arch v0.1 beta</a></li>
-            <li><a href="mods.html#interface">Интерфейс</a></li>
-            <li><a href="https://t.me/sktlaucnherbot" target="_blank" rel="noopener" class="js-download">Windows (скоро Android)</a></li>
+            <li><a href="mods.html#interface" data-i18n="footer_ui">Интерфейс</a></li>
+            <li><a href="https://t.me/sktlauncher" target="_blank" rel="noopener" class="js-download" data-i18n="footer_win_and">Windows (скоро Android)</a></li>
           </ul>
         </div>
         <div class="q-footer__col">
-          <h4>Технологии</h4>
+          <h4 data-i18n="footer_tech">Технологии</h4>
           <ul>
             <li><a href="arch.html#hybrid">Stockfish 19</a></li>
-            <li><a href="arch.html#inside">Нейросеть AIarch v1</a></li>
-            <li><a href="about.html">Ядро на Rust</a></li>
+            <li><a href="arch.html#inside" data-i18n="footer_ai">Нейросеть AIarch v1</a></li>
+            <li><a href="about.html" data-i18n="footer_rust">Ядро на Rust</a></li>
           </ul>
         </div>
       </div>
     </div>
-    <p class="q-footer__copy">© <span class="js-year">2026</span> SKT Launcher. Все права защищены.</p>
+    <p class="q-footer__copy">© <span class="js-year">2026</span> <span data-i18n="footer_copy">SKT Launcher. Все права защищены.</span></p>
   </footer>
 
-  <script src="app.js?v=5"></script>
+  <script src="i18n.js?v=6"></script>
+  <script src="app.js?v=6"></script>
 </body>
 </html>

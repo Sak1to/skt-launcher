@@ -5,10 +5,11 @@
    hero launcher mockup with presets & AIarch v1 chess analysis.
    ========================================================= */
 
-const BOT = "sktlaucnherbot";
-const DOWNLOAD_URL = `https://t.me/${BOT}`;
+const TG_CHANNEL = "sktlauncher";
+const DOWNLOAD_URL = `https://t.me/${TG_CHANNEL}`;
 const isTouch = matchMedia("(hover: none)").matches;
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const tr = (key, fallback) => (window.SKT_I18N ? window.SKT_I18N.t(key) : fallback);
 
 /* ---------- Wire Telegram Download Links & Year ---------- */
 document.querySelectorAll(".js-year").forEach((el) => (el.textContent = new Date().getFullYear()));
@@ -227,20 +228,21 @@ document.querySelectorAll(".js-starfield").forEach((canvas) => {
     if (launchBtn) {
       launchBtn.classList.toggle("on", running);
       launchBtn.innerHTML = running
-        ? `<svg class="ic" width="15" height="15"><use href="#i-pause"/></svg> Остановить`
-        : `<svg class="ic" width="15" height="15"><use href="#i-play"/></svg> Запустить`;
+        ? `<svg class="ic" width="15" height="15"><use href="#i-pause"/></svg> ${tr("btn_stop", "Остановить")}`
+        : `<svg class="ic" width="15" height="15"><use href="#i-play"/></svg> ${tr("btn_start", "Запустить")}`;
     }
     if (statusTxt) {
       statusTxt.textContent = running
-        ? `Активен · ${selectedSrv} · Stockfish 19 + AIarch v1`
-        : `Остановлено · ${selectedSrv} готов к запуску`;
+        ? `${tr("status_active", "Активен")} · ${selectedSrv} · Stockfish 19 + AIarch v1`
+        : `${tr("status_stopped", "Остановлено")} · ${selectedSrv} ${tr("status_ready", "готов к запуску")}`;
     }
-    if (modeSlot) modeSlot.textContent = running ? `${p.depth} · ${p.nps}` : "Ожидание";
+    if (modeSlot) modeSlot.textContent = running ? `${p.depth} · ${p.nps}` : tr("status_idle", "Ожидание");
     if (pingSlot) pingSlot.textContent = running ? p.ms : "—";
     if (depthBar) depthBar.style.width = running ? p.bar : "0%";
   }
 
   launchBtn?.addEventListener("click", () => { running = !running; updateStatus(); });
+  window.SKT_I18N?.onChange(updateStatus);
   updateStatus();
 
   // Subtle live NPS jitter while running
@@ -413,7 +415,7 @@ document.querySelectorAll(".js-starfield").forEach((canvas) => {
         return k === 0 ? `${Math.floor(n / 2) + 1}…${x.san}` : x.san;
       });
       if (pvSf) pvSf.textContent = pv.join(" ");
-      if (pvAi && m.ai) pvAi.textContent = `Человек: ${m.san} (${m.sfPct}%) · альт. ${m.ai[2]} (${m.ai[3]}%)`;
+      if (pvAi && m.ai) pvAi.textContent = `${tr("ai_human", "Человек")}: ${m.san} (${m.sfPct}%) · ${tr("ai_alt", "альт.")} ${m.ai[2]} (${m.ai[3]}%)`;
     }
 
     function setEval(v) {
@@ -475,6 +477,7 @@ document.querySelectorAll(".js-starfield").forEach((canvas) => {
     btnStep?.addEventListener("click", () => { step(); if (playing) loop(); });
     btnReset?.addEventListener("click", () => { reset(); if (playing) loop(); });
 
+    window.SKT_I18N?.onChange(renderInfo);
     reset();
     if (!reduceMotion) loop();
   });
